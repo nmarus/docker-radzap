@@ -35,7 +35,7 @@ RUN mkdir -p /etc/radicale
 COPY config /etc/radicale/config
 COPY rights /etc/radicale/rights
 COPY logging /etc/radicale/logging
-COPY rad-admin.sh /usr/local/bin/rad-admin
+COPY rad-admin /usr/local/bin/rad-admin
 RUN chmod +x /usr/local/bin/rad-admin
 
 #copy startup script

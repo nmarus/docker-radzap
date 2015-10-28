@@ -17,9 +17,9 @@ add-cal() {
 }
 
 if [ ! -f ${RAD_HTPASS} ]; then
-    htpasswd -cbs ${RAD_HTPASS} ${USER} ${PASS}
+    htpasswd -cbs ${RAD_HTPASS} ${USER} ${PASS} > /dev/null
 else
-    htpasswd -bs ${RAD_HTPASS} ${USER} ${PASS}
+    htpasswd -bs ${RAD_HTPASS} ${USER} ${PASS} > /dev/null
 fi
 
 add-cal ${USER} ${PASS} ${CAL}
