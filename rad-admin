@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+RAD_URL=http://localhost:5232
+RAD_HTPASS=/etc/radicale/users
+
+USER=${1}
+PASS=${2}
+CAL=${3}
+
+#$1 = user
+#$2 = password
+#$3 = calname.ics
+add-cal() {
+    curl -Ls -u ${1}:${2} ${RAD_URL}/${1}/${3}/ > /dev/null
+}
+
+if [ ! -f ${RAD_HTPASS} ]; then
+    htpasswd -cbs ${RAD_HTPASS} ${USER} ${PASS}
+else
+    htpasswd -bs ${RAD_HTPASS} ${USER} ${PASS}
+fi
+
+add-cal ${USER} ${PASS} ${CAL}

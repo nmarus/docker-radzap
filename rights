@@ -1,0 +1,18 @@
+# Allow caldavzap, carddavmate and infcloud to work
+[infcloud]
+user: .*
+collection: /
+permission: r
+
+# Give write access to owners
+[owner-write]
+user: .+
+# collection: ^%(login)s/.+$    # DOES NOT WORK
+collection: ^%(login)s(/.+)?$
+permission: rw
+
+# Allow authenticated user to read all collections
+[allow-everyone-read]
+user: .+
+collection: .*
+permission: r
