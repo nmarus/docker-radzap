@@ -19,7 +19,7 @@
 hosts = 0.0.0.0:5232
 
 # Daemon flag
-daemon = False
+daemon = True
 
 # File storing the PID in daemon mode
 pid = /etc/radicale/pid

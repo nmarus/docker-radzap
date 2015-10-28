@@ -13,13 +13,24 @@ CAL=${3}
 #$2 = password
 #$3 = calname.ics
 add-cal() {
-    curl -Ls -u ${1}:${2} ${RAD_URL}/${1}/${3}/ > /dev/null
+    curl -Ls -u ${1}:${2} ${RAD_URL}/${1}/${3}/ &> /dev/null
 }
 
+#check if htpasswd file exists
 if [ ! -f ${RAD_HTPASS} ]; then
-    htpasswd -cbs ${RAD_HTPASS} ${USER} ${PASS} > /dev/null
+    htpasswd -cbs ${RAD_HTPASS} ${USER} ${PASS} &> /dev/null
 else
-    htpasswd -bs ${RAD_HTPASS} ${USER} ${PASS} > /dev/null
+    htpasswd -bs ${RAD_HTPASS} ${USER} ${PASS} &> /dev/null
 fi
 
-add-cal ${USER} ${PASS} ${CAL}
+#check if radicale is running
+if [[ $(pgrep radicale) > 1 ]]; then
+    add-cal ${USER} ${PASS} ${CAL}
+else
+    radicale
+    sleep 5
+    add-cal ${USER} ${PASS} ${CAL}
+    sleep 5
+    kill $(pgrep radicale)
+    rm -f /etc/radicale/pid &> /dev/null
+fi
